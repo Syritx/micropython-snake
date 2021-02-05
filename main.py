@@ -36,7 +36,7 @@ segments = []
 display = None
 
 def restart_game():
-    global display
+    global display, segments, x_food, y_food, x_player, y_player, y_dir, x_dir
     segments = []
     x_food = int(rand(127, 1))
     y_food = int(rand(63, 1))
@@ -49,6 +49,7 @@ def restart_game():
     display.rect(x_player, y_player, 1, 1, 1)
     display.rect(x_food, y_food, 1, 1, 1)
     display.show()
+    start()
 
 
 def rand(floor, mod = 0, negative = False):
@@ -142,6 +143,7 @@ def start():
 	for s in segments:
 	    if x_player == s.x and y_player == s.y:
 		restart_game()
+		break
 
 	if x_player <= x_food+1 and x_player >= x_food-1 and y_player <= y_food+1 and y_player >= y_food-1:
 	    x_food = int(rand(127, 1))
