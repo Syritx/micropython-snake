@@ -42,7 +42,7 @@ def restart_game():
     y_food = int(rand(63, 1))
 
     x_player = int(128/2)
-    y_player = inr(64/2)
+    y_player = int(64/2)
     x_dir = 0
     y_dir = 0
     display.fill(0)
