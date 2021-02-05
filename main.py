@@ -33,6 +33,23 @@ x_dir = 0
 y_dir = 0
 
 segments = []
+display = None
+
+def restart_game():
+    global display
+    segments = []
+    x_food = int(rand(127, 1))
+    y_food = int(rand(63, 1))
+
+    x_player = int(128/2)
+    y_player = inr(64/2)
+    x_dir = 0
+    y_dir = 0
+    display.fill(0)
+    display.rect(x_player, y_player, 1, 1, 1)
+    display.rect(x_food, y_food, 1, 1, 1)
+    display.show()
+
 
 def rand(floor, mod = 0, negative = False):
     from os import urandom as rnd
@@ -50,7 +67,7 @@ def rand(floor, mod = 0, negative = False):
 
 
 def start():
-    global x_player, y_player, x_food, y_food, x_dir, y_dir
+    global x_player, y_player, x_food, y_food, x_dir, y_dir, display
 
     buttons = [Button(BUTTON_PINS[0], 'UP'),
 	       Button(BUTTON_PINS[1], 'DOWN'),
@@ -88,16 +105,15 @@ def start():
 		    	x_dir = 1
 		    	y_dir = 0
 
-	if x_player > 128:
+	if x_player > 127:
 	    x_player = 0
-	
 	if x_player < 0:
-	    x_player = 128
+	    x_player = 127
 
-	if y_player > 64:
+	if y_player > 63:
 	    y_player = 0
 	if y_player < 0:
-	    y_player = 64
+	    y_player = 63
 
 	display.fill(0)
 
@@ -122,6 +138,10 @@ def start():
 	
 	x_player += x_dir
 	y_player += y_dir
+
+	for s in segments:
+	    if x_player == s.x and y_player == s.y:
+		restart_game()
 
 	if x_player <= x_food+1 and x_player >= x_food-1 and y_player <= y_food+1 and y_player >= y_food-1:
 	    x_food = int(rand(127, 1))
